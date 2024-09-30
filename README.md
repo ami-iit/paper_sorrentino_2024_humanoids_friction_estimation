@@ -49,3 +49,11 @@ python feedforwardNN_wandb.py --joint_name "r_ankle_roll"
 The trained networks are saved in the results forlder and can be converted in a `onnx` model by using the script `convert_to_onnx.py`.
 
 The `onnx` model is loaded by the device [`JointTorqueControlDevice`](https://github.com/ami-iit/bipedal-locomotion-framework/tree/master/devices/JointTorqueControlDevice) running on the robot torso computer.
+
+## Maintainer
+
+This repository is maintained by:
+
+| | |
+|:---:|:---:|
+| [<img src="https://user-images.githubusercontent.com/43743081/89022636-a17e9e00-d322-11ea-9abd-92cda85d3705.jpeg" width="40">](https://github.com/isorrentino) | [@inessorrentino](https://github.com/isorrentino) |
