@@ -1,0 +1,31 @@
+[general]
+save_model = 1
+save_results = 1
+plot_results = 1
+input_model = 4
+results_folder = '/home/iit.local/isorrentino/dev/pinn_friction_results/r_ankle_roll/'
+# model = 1 --> input = [(rs - theta), ds]
+# model = 2 --> input = [omega, ds]
+# model = 3 --> input = [(sr-theta), omega, ds]
+# model = 4 --> input = [(sr-theta), s, ds]
+# model = 5 --> input = [theta, omega, s, ds]
+
+[joint]
+joint_to_model = "r_ankle_roll"
+gear_ratio = 160.0
+torque_constant = 0.066468037
+joint_lim_inf = -0.44157122
+joint_lim_sup = 0.44157122
+joint_acc_limit = 10.0
+im_limit = 10.0
+tauf_limit = 15.0
+joint_vel_limit = 10.0
+
+[friction_params]
+Fc = 0.19910740852355957
+Fs = 0.39531609416007996
+Fv = 0.8248797059059143
+Vs = 0.005753682926297188
+
+[data]
+folders = ["/home/iit.local/isorrentino/dev/dataset/r_ankle_roll"]

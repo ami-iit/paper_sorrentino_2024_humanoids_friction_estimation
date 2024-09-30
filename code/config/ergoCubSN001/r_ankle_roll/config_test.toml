@@ -1,0 +1,15 @@
+folders = ["/home/iit.local/isorrentino/element_sensorless-torque-control/code/python/PINN_friction/results/r_ankle_roll/epochs_350_batch_4777_pastsamples_29/val_data.pickle"]
+
+model = "/home/iit.local/isorrentino/element_sensorless-torque-control/code/python/PINN_friction/results/r_ankle_roll/epochs_350_batch_4777_pastsamples_29/model_e349.pt"
+scaler = "/home/iit.local/isorrentino/element_sensorless-torque-control/code/python/PINN_friction/results/r_ankle_roll/epochs_350_batch_4777_pastsamples_29/scaler.pkl"
+
+[joint]
+joint_to_model = "r_ankle_roll"
+gear_ratio = 160.0
+torque_constant = 0.025
+joint_lim_inf = -0.44157122
+joint_lim_sup = 0.44157122
+joint_acc_limit = 500.0
+im_limit = 2.0
+tauf_limit = 30.0
+joint_vel_limit = 10.0

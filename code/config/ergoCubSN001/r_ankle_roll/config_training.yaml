@@ -1,0 +1,11 @@
+project_name: friction_torque
+batch_size: 4316
+hidden_size0: 268
+hidden_size1: 215
+# hidden_size2: 280
+learning_rate: 0.0007562
+num_epochs: 700
+num_past_samples: 20
+lambda_loss_physics: 0.16460
+dropout_rate: 0.07027
+toml_path: "code/python/PINN_friction/config/ergoCubSN001/r_ankle_roll/r_ankle_roll.toml"

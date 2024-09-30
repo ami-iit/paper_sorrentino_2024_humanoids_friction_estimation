@@ -1,0 +1,37 @@
+method: random
+project_name: r_ankle_roll
+metric:
+  goal: minimize
+  name: val_loss
+parameters:
+  batch_size:
+    #value: 4800
+    distribution: int_uniform
+    max: 5000
+    min: 3000
+  hidden_size0:
+    distribution: int_uniform
+    max: 300
+    min: 150
+  hidden_size1:
+    distribution: int_uniform
+    max: 300
+    min: 150
+  learning_rate:
+    max: 0.001
+    min: 0.00001
+  num_epochs:
+    value: 350
+  num_past_samples:
+    #value: 20
+    distribution: int_uniform
+    max: 30
+    min: 3
+  lambda_loss_physics:
+    max: 0.5
+    min: 0.1
+  dropout_rate:
+    max: 0.1
+    min: 0.01
+  toml_path: 
+    value: "code/python/PINN_friction/config/ergoCubSN001/r_ankle_roll/config_general.toml"
