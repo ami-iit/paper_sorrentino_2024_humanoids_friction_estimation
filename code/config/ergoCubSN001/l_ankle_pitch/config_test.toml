@@ -1,0 +1,20 @@
+folders = ["code/python/datasets/ergoCubSN001/friction_datasets/current_control_experiments/senza_pesi/current_traj_player/test/parsed",
+           "code/python/datasets/ergoCubSN001/friction_datasets/current_control_experiments/senza_pesi/ramp/l_ankle_pitch/test/parsed",
+           "code/python/datasets/ergoCubSN001/friction_datasets/current_control_experiments_2/l_ankle_pitch/ramp/test/parsed",
+           "code/python/datasets/ergoCubSN001/friction_datasets/current_control_experiments_2/l_ankle_pitch/sinusoid/test/parsed",
+           "code/python/datasets/ergoCubSN001/friction_datasets/current_control_experiments_2/l_ankle_pitch/step/test/parsed"]
+           #"code/python/datasets/ergoCubSN001/friction_datasets/current_control_experiments/senza_pesi/current_sinusoid_0_0023/l_ankle_pitch/test/parsed"]
+
+model = "code/python/PINN_friction/results/l_ankle_pitch/epochs_700_batch_4635_pastsamples_16/model_e699.pt"
+scaler = "code/python/PINN_friction/results/l_ankle_pitch/epochs_700_batch_4635_pastsamples_16/scaler.pkl"
+
+[joint]
+joint_to_model = "l_ankle_pitch"
+gear_ratio = -100.0
+torque_constant = 0.156977705
+joint_lim_inf = -0.8133
+joint_lim_sup = 0.8133
+joint_acc_limit = 10.0
+im_limit = 2.5
+tauf_limit = 100.0
+joint_vel_limit = 10.0

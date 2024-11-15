@@ -1,0 +1,25 @@
+[general]
+save_model = 1
+save_results = 1
+plot_results = 1
+results_folder = '/home/iit.local/isorrentino/dev/pinn_friction_results/l_ankle_roll/'
+
+[joint]
+joint_to_model = "l_ankle_roll"
+gear_ratio = -160.0
+torque_constant = 0.066468037
+joint_lim_inf = -0.44157122
+joint_lim_sup = 0.44157122
+joint_acc_limit = 10.0
+im_limit = 10.0
+tauf_limit = 15.0
+joint_vel_limit = 10.0
+
+[friction_params]
+Fc = 0.24138616025447845
+Fs = 0.46277737617492676
+Fv = 0.7721438407897949
+Vs = 0.019830700010061264
+
+[data]
+folders = ["/home/iit.local/isorrentino/dev/dataset/l_ankle_roll"]

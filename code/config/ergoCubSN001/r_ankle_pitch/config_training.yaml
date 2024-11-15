@@ -1,0 +1,10 @@
+project_name: r_ankle_pitch
+batch_size: 4429
+hidden_size0: 233
+hidden_size1: 229
+learning_rate: 0.0001551966160270967
+num_epochs: 350
+num_past_samples: 20
+lambda_loss_physics: 0.12207684104617168
+dropout_rate: 0.03839724800972377
+toml_path: "code/python/PINN_friction/config/ergoCubSN001/r_ankle_pitch/config_general.toml"

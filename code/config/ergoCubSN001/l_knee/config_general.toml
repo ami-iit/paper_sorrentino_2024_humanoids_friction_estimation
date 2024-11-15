@@ -1,0 +1,26 @@
+[general]
+save_model = 1
+save_results = 1
+plot_results = 1
+results_folder = '/home/iit.local/isorrentino/dev/pinn_friction_results/l_knee/'
+
+[joint]
+joint_to_model = "l_knee"
+gear_ratio = -100.0
+torque_constant = 0.156977705
+joint_lim_inf = -1.83567889
+joint_lim_sup = 0.13519444
+joint_acc_limit = 10.0
+im_limit = 5.0
+tauf_limit = 100.0
+joint_vel_limit = 10.0
+
+[friction_params]
+Fc = 0.3304131031036377
+Fs = 0.6949447393417358
+Fv = 0.47528454661369324
+Vs = 0.009678372181952
+
+
+[data]
+folders = ["/home/iit.local/isorrentino/dev/dataset/l_knee/"]

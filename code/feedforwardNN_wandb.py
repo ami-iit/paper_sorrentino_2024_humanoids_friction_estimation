@@ -14,8 +14,8 @@ from FrictionTorqueDataset import FrictionTorqueDataset
 from StandardScaler import StandardScaler
 import argparse
 
-
-input_model_type = 5
+input_model_type = -100
+percentage = 0.9
 
 def load_config(file_path):
     try:
@@ -41,8 +41,8 @@ def evaluate(test_data_loader, model, loss_fcn1, loss_fcn2, run, device):
     with torch.no_grad():
         for i, (input, output, physics) in enumerate(test_data_loader):
             predictions = model(input)
-            loss1 = loss_fcn1(predictions, output)
-            loss2 = loss_fcn2(predictions, physics)
+            loss1 = loss_fcn1(predictions, output.unsqueeze(-1))
+            loss2 = loss_fcn2(predictions, physics.unsqueeze(-1))
             loss = (
                 1 - run.config.lambda_loss_physics
             ) * loss1 + run.config.lambda_loss_physics * loss2
@@ -115,7 +115,7 @@ def run_train(run):
     # input_model_type = config["general"]["input_model"]
 
     [input, output, physics] = create_dataset(
-        data_concatenated, config_dataset_creation, input_model_type
+        data_concatenated, config_dataset_creation, input_model_type, training=True, discard_percentage=percentage
     )
 
     model_folder = Path(
@@ -182,8 +182,8 @@ def run_train(run):
             # Forward pass
             predictions = model(input)
 
-            loss1 = criterion1(predictions, output)
-            loss2 = criterion2(predictions, physics)
+            loss1 = criterion1(predictions, output.unsqueeze(-1))
+            loss2 = criterion2(predictions, physics.unsqueeze(-1))
 
             loss = (
                 1 - run.config.lambda_loss_physics
@@ -213,16 +213,16 @@ def run_train(run):
         output_train_list = np.concatenate(output_train_list, axis=0)
 
         # Plot predictions vs output for training dataset
-        fig, ax = plt.subplots()
-        sample_numbers = np.arange(len(output_train_list))
-        ax.plot(sample_numbers, output_train_list, label='True Output', color='blue')
-        ax.plot(sample_numbers, predictions_train, label='Predictions', color='orange')
-        ax.set_xlabel('Sample Number')
-        ax.set_ylabel('Value')
-        ax.set_title('Predictions vs Output (Training)')
-        ax.legend()
-        wandb.log({"Predictions vs Output (Training)": wandb.Image(fig)})
-        plt.close(fig)
+        # fig, ax = plt.subplots()
+        # sample_numbers = np.arange(len(output_train_list))
+        # ax.plot(sample_numbers, output_train_list, label='True Output', color='blue')
+        # ax.plot(sample_numbers, predictions_train, label='Predictions', color='orange')
+        # ax.set_xlabel('Sample Number')
+        # ax.set_ylabel('Value')
+        # ax.set_title('Predictions vs Output (Training)')
+        # ax.legend()
+        # wandb.log({"Predictions vs Output (Training)": wandb.Image(fig)})
+        # plt.close(fig)
 
         log = dict()
         log["epoch"] = epoch
@@ -231,15 +231,16 @@ def run_train(run):
         log["scaler_input_mean"] = x_scaler.mean
         log["scaler_input_std"] = x_scaler.std
         log["scale_data"] = scale_data
+        log["model"] = input_model_type
 
-        if val_loss > 2.0 or total_loss > 3.0:
+        if val_loss > 1000.0 or total_loss > 1000.0:
             # Exit for loop if validation loss is too high
             break
 
         wandb.log(log)
         if (epoch + 1) % 50 == 0 and (epoch + 1) > 150:
             to_save = {}
-            to_save["model"] = model.state_dict()
+            to_save["trained_pinn_model"] = model.state_dict()
             to_save["scaler_input_mean"] = x_scaler.mean
             to_save["scaler_input_std"] = x_scaler.std
             to_save["hidden_size0"] = run.config.hidden_size0
@@ -250,6 +251,7 @@ def run_train(run):
             to_save["scaler_input_std"] = x_scaler.std
             to_save["nn_input_size"] = input_train.shape[1]
             to_save["scale_data"] = scale_data
+            to_save["model"] = input_model_type
             torch.save(to_save, str(model_folder / ("model_e" + str(epoch) + ".pt")))
             print(f"Model saved at epoch {epoch}")
             with open(str(model_folder) + "/scaler.pkl", "wb") as f:
@@ -267,30 +269,42 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Select joint for identification")
     parser.add_argument(
         "--joint_name",
+        "-j",
         type=str,
         help="Select the joint for running the friction identification",
     )
+    parser.add_argument(
+        "--model_type",
+        "-m",
+        type=int,
+        help="Select the type of PINN model you want to train",
+    )
+    parser.add_argument(
+        "--discard_percentage",
+        "-p",
+        type=float,
+        help="Select the percentage of dataset to discard",
+    )
     args = parser.parse_args()
     joint_name = args.joint_name
+    input_model_type = args.model_type
+    percentage = args.discard_percentage
 
     print("Training launched for joint")
     print(joint_name)
 
     tune = True
     if tune:
-        if joint_name == "r_ankle_roll":
-            config_file_name = "code/python/PINN_friction/config/ergoCubSN001/r_ankle_roll/config_training_wandb.yaml"
-        elif joint_name == "r_ankle_pitch":
-            config_file_name = "code/python/PINN_friction/config/ergoCubSN001/r_ankle_pitch/config_training_wandb.yaml"
+        config_file_name = f"code/python/PINN_friction/config/ergoCubSN001/{joint_name}/config_training_wandb.yaml"
+
         with open(config_file_name, "r") as file:
             SWEEP_CONFIG = yaml.safe_load(file)
         sweep_id = wandb.sweep(SWEEP_CONFIG, project=SWEEP_CONFIG["project_name"])
         wandb.agent(sweep_id, main, count=100)
     else:
-        with open(
-            "code/python/PINN_friction/config/ergoCubSN001/r_ankle_roll/r_ankle_roll.yaml",
-            "r",
-        ) as file:
+        config_file_name = f"code/python/PINN_friction/config/ergoCubSN001/{joint_name}/config_training.yaml"
+
+        with open(config_file_name, "r") as file:
             RUN_CONFIG = yaml.safe_load(file)
         print(RUN_CONFIG)
         run = wandb.init(

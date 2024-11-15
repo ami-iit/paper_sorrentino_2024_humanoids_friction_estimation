@@ -1,0 +1,25 @@
+[general]
+save_model = 1
+save_results = 1
+plot_results = 1
+results_folder = '/home/iit.local/isorrentino/dev/pinn_friction_results/r_ankle_pitch/'
+
+[joint]
+joint_to_model = "r_ankle_pitch"
+gear_ratio = 100.0
+torque_constant = 0.156977705
+joint_lim_inf = -0.8133
+joint_lim_sup = 0.8133
+joint_acc_limit = 10.0
+im_limit = 2.5
+tauf_limit = 100.0
+joint_vel_limit = 10.0
+
+[friction_params]
+Fc = 0.4281995892524719
+Fs = 0.61873859167099
+Fv = 0.4571692645549774
+Vs = 0.0308143999427557
+
+[data]
+folders = ["/home/iit.local/isorrentino/dev/dataset/r_ankle_pitch"]

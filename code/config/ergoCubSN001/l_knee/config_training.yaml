@@ -1,0 +1,10 @@
+model: l_knee
+batch_size: 1416
+hidden_size1: 455
+hidden_size2: 394
+learning_rate: 0.00084
+num_epochs: 200
+num_past_samples: 26
+lambda_loss_physics: 0.02
+dropout_rate: 0.3702
+toml_path: "code/python/PINN_friction/config/ergoCubSN001/l_knee/config_general.toml"

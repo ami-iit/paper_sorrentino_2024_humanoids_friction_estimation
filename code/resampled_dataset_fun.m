@@ -43,7 +43,10 @@ function chunks = split_vector(dataset)
     
     % the chunk starts when the difference between two consecutive timestamps is greater than 1s
     % find the indices of the timestamps that are greater than 1s
-    idx = find(dt > 1);
+    idx = find(dt > 1.0);
+    if isempty(idx)
+        idx = [length(timestamps)-1];
+    end
 
     chunks = {};
     start = timestamps(1);

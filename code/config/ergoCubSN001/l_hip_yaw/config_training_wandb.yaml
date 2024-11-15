@@ -1,0 +1,35 @@
+method: random
+model: l_hip_yaw
+metric:
+  goal: minimize
+  name: val_loss
+parameters:
+  batch_size:
+    distribution: int_uniform
+    max: 3000
+    min: 1000
+  hidden_size1:
+    distribution: int_uniform
+    max: 512
+    min: 100
+  hidden_size2:
+    distribution: int_uniform
+    max: 512
+    min: 100
+  learning_rate:
+    value: 0.0005
+  num_epochs:
+    max: 150
+    min: 60
+  num_past_samples:
+    distribution: int_uniform
+    max: 40
+    min: 2
+  lambda_loss_physics:
+    max: 0.4
+    min: 0.1
+  dropout_rate:
+    max: 0.5
+    min: 0.01
+  toml_path: 
+    value: "code/python/PINN_friction/config/ergoCubSN001/l_hip_yaw/l_hip_yaw.toml"

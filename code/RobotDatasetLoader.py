@@ -157,7 +157,13 @@ class RobotDatasetLoader:
         for orientation in data_logged["orientations"].keys():
             data["orientations"][orientation] = data_logged["orientations"][orientation]["data"]
 
+        
+        # data['r_front_contact'] = data_logged['cartesian_wrenches']['right_front_wrench_client']['data']
+        # data['r_rear_contact'] = data_logged['cartesian_wrenches']['right_rear_wrench_client']['data']
+        # data['r_leg_contact'] = data_logged['cartesian_wrenches']['right_leg_wrench_client']['data']
+
         # Compute motor velocity and acceleration
+        print(data["theta"].shape)
         data["theta"] = data["theta"][:, idx]
 
         # Reconstruct joint position integrating joint acceleration and velocity only fir tge joint self.joint_current_control
@@ -190,16 +196,16 @@ class RobotDatasetLoader:
             fs*0.1, # torso_pitch
             fs*0.1, # torso_roll
             fs*0.1, # torso_yaw
-            fs*0.3, # l_hip_pitch
-            fs*0.3, # l_hip_roll
-            fs*0.22, # l_hip_yaw
-            fs*0.3, # l_knee
-            fs*0.3, # l_ankle_pitch
+            fs*0.1, # l_hip_pitch
+            fs*0.1, # l_hip_roll
+            fs*0.1, # l_hip_yaw
+            fs*0.1, # l_knee
+            fs*0.1, # l_ankle_pitch
             fs*0.1, # l_ankle_roll
-            fs*0.3, # r_hip_pitch
-            fs*0.3, # r_hip_roll
-            fs*0.22, # r_hip_yaw
-            fs*0.3, # r_knee
+            fs*0.1, # r_hip_pitch
+            fs*0.1, # r_hip_roll
+            fs*0.1, # r_hip_yaw
+            fs*0.1, # r_knee
             fs*0.1, # r_ankle_pitch
             fs*0.1  # r_ankle_roll
         ]

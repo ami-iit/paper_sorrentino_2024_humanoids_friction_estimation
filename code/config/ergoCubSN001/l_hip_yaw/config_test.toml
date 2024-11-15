@@ -1,0 +1,22 @@
+folders = ["code/python/datasets/ergoCubSN001/friction_datasets/current_control_experiments/senza_pesi/current_sinusoid_0_0023/l_hip_yaw/test/parsed",
+        "code/python/datasets/ergoCubSN001/friction_datasets/current_control_experiments/senza_pesi/current_traj_player/test/parsed",
+        "code/python/datasets/ergoCubSN001/friction_datasets/current_control_experiments/senza_pesi/ramp/l_hip_yaw/test/parsed",
+        "code/python/datasets/ergoCubSN001/friction_datasets/current_control_experiments_2/l_hip_yaw/ramp/test/parsed",
+        "code/python/datasets/ergoCubSN001/friction_datasets/current_control_experiments_2/l_hip_yaw/sinusoid/test/parsed",
+        "code/python/datasets/ergoCubSN001/friction_datasets/current_control_experiments_2/l_hip_yaw/step/test/parsed"]
+
+
+#model = "code/python/PINN_friction/results/l_hip_yaw/epochs_53_batch_2987_pastsamples_29/model_e49.pt"
+#scaler = "code/python/PINN_friction/results/l_hip_yaw/epochs_53_batch_2987_pastsamples_29/scaler.pkl"
+#model = "code/python/PINN_friction/results/l_hip_yaw/epochs_76_batch_1965_pastsamples_11/model_e69.pt"
+#scaler = "code/python/PINN_friction/results/l_hip_yaw/epochs_76_batch_1965_pastsamples_11/scaler.pkl"
+model = "code/python/PINN_friction/results/l_hip_yaw/epochs_80_batch_1429_pastsamples_12/model_e79.pt"
+scaler = "code/python/PINN_friction/results/l_hip_yaw/epochs_80_batch_1429_pastsamples_12/scaler.pkl"
+
+[joint]
+joint_to_model = "l_hip_yaw"
+gear_ratio = -100.0
+torque_constant = 0.047
+joint_lim_inf = -1.42433889
+joint_lim_sup = 1.4243388
+joint_acc_limit = 10.0

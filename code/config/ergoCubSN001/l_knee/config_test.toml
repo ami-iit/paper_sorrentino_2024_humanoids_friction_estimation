@@ -1,0 +1,17 @@
+folders = [
+    "code/python/datasets/ergoCubSN001/friction_datasets/current_control_experiments/senza_pesi/current_sinusoid_0_0023/l_knee/test/parsed",
+    "code/python/datasets/ergoCubSN001/friction_datasets/current_control_experiments/senza_pesi/ramp/l_knee/test/parsed",
+    "code/python/datasets/ergoCubSN001/friction_datasets/current_control_experiments_2/l_knee/ramp/test/parsed",
+    "code/python/datasets/ergoCubSN001/friction_datasets/current_control_experiments_2/l_knee/sinusoid/test/parsed"
+]
+
+[joint]
+joint_to_model = "l_knee"
+gear_ratio = -100.0
+torque_constant = 0.111
+joint_lim_inf = -1.83567889
+joint_lim_sup = 0.13519444
+joint_acc_limit = 10.0
+im_limit = 5.0
+tauf_limit = 30.0
+joint_vel_limit = 3.0

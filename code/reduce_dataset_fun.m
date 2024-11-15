@@ -17,7 +17,7 @@ function dataset = reduce_dataset_fun(dataset, moving_joints, associated_joints)
     end
 
     % remove the cartesian_wrenches field from the structure
-    robot_logger_device = check_and_remvove_field(robot_logger_device, 'cartesian_wrenches');
+    % robot_logger_device = check_and_remvove_field(robot_logger_device, 'cartesian_wrenches');
 
     % remove the temperature field from the structure
     robot_logger_device = check_and_remvove_field(robot_logger_device, 'temperatures');

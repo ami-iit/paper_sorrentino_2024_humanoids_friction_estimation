@@ -1,0 +1,18 @@
+folders = ["code/python/datasets/ergoCubSN001/friction_datasets/current_control_experiments/senza_pesi/current_sinusoid_0_0023/l_ankle_roll/test/parsed",
+        "code/python/datasets/ergoCubSN001/friction_datasets/current_control_experiments/senza_pesi/current_traj_player/test/parsed",
+        "code/python/datasets/ergoCubSN001/friction_datasets/current_control_experiments/senza_pesi/ramp/l_ankle_roll/test/parsed",
+        "code/python/datasets/ergoCubSN001/friction_datasets/current_control_experiments_2/l_ankle_roll/ramp/test/parsed",
+        "code/python/datasets/ergoCubSN001/friction_datasets/current_control_experiments_2/l_ankle_roll/step/test/parsed",
+        "code/python/datasets/ergoCubSN001/friction_datasets/current_control_experiments_2/l_ankle_roll/sinusoid/parsed",
+        "code/python/datasets/ergoCubSN001/friction_datasets/friction_identification_l_ankle_roll/test/parsed"]
+
+[joint]
+joint_to_model = "l_ankle_roll"
+gear_ratio = -160.0
+torque_constant = 0.066468037
+joint_lim_inf = -0.44157122
+joint_lim_sup = 0.44157122
+joint_acc_limit = 10.0
+im_limit = 10.0
+tauf_limit = 15.0
+joint_vel_limit = 10.0

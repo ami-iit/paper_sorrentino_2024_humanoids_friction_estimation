@@ -4,13 +4,11 @@ import torch.optim as optim
 import h5py
 import matplotlib.pyplot as plt
 
-velocity_threshold = 0.05
-force_threshold = 35.0
-acceleration_threshold = 100.0
-# gear_ratio = 160.0
-# ktau = 0.066468037
-gear_ratio = 100.0
-ktau = 0.156977705
+velocity_threshold = 0.03
+force_threshold = 20
+acceleration_threshold = 10.0
+ktau = 0.111
+gear_ratio = -100.0
 
 import torch
 import torch.nn as nn
@@ -19,10 +17,10 @@ class ContinuousFrictionModel(nn.Module):
     def __init__(self):
         super(ContinuousFrictionModel, self).__init__()
         # Inizializza i parametri con valori di partenza ragionevoli
-        self.F_c = nn.Parameter(torch.tensor(1.0))  # Attrito di Coulomb
-        self.F_s = nn.Parameter(torch.tensor(1.6))  # Attrito statico
-        self.F_v = nn.Parameter(torch.tensor(1.0))  # Coefficiente di attrito viscoso
-        self.v_s = nn.Parameter(torch.tensor(0.00001))  # Velocità di Stribeck, controlla l'effetto Stribeck
+        self.F_c = nn.Parameter(torch.tensor(14.0))  # Attrito di Coulomb
+        self.F_s = nn.Parameter(torch.tensor(18.0))  # Attrito statico
+        self.F_v = nn.Parameter(torch.tensor(0.1))  # Coefficiente di attrito viscoso
+        self.v_s = nn.Parameter(torch.tensor(0.0001))  # Velocità di Stribeck, controlla l'effetto Stribeck
 
     def forward(self, v):
         """Passaggio forward del modello"""
@@ -31,7 +29,7 @@ class ContinuousFrictionModel(nn.Module):
         Fs = torch.nn.functional.softplus(self.F_s)
         Fv = torch.nn.functional.softplus(self.F_v)
         Vs = torch.nn.functional.softplus(self.v_s)
-        alpha = 1e-7
+        alpha = 1e-10
         
         # Calcola l'effetto Stribeck
         stribeck_term = (Fs - Fc) * torch.exp(-(v / Vs) ** 2)
@@ -71,7 +69,7 @@ class ComprehensiveFrictionModel(nn.Module):
 
 # Create synthetic data
 def load_data():
-    folder_datasets = '/home/isorrentino/dev/dataset/friction/r_ankle_pitch/parsed'
+    folder_datasets = '/home/isorrentino/dev/dataset/friction/l_knee/parsed'
     import pickle
     import os
     # find all the pickle files in the folder
@@ -106,14 +104,14 @@ def load_data():
     max_v = torch.max(torch.abs(v_data))
     max_F_f = torch.max(torch.abs(F_f_data))
 
-    v_data = v_data / max_v
-    F_f_data = F_f_data / max_F_f
+    # v_data = v_data / max_v
+    # F_f_data = F_f_data / max_F_f
 
     return v_data, F_f_data, max_v, max_F_f, a_data
 
 def train_model(model, v_data, F_f_data, max_v, max_F_f, a_data, epochs=1000, lr=0.01, velocity_threshold=velocity_threshold, force_threshold=force_threshold, acceleration_threshold=acceleration_threshold):
     # Create a mask to filter out data where both velocity and force are below their thresholds
-    combined_mask = (torch.abs(v_data * max_v) > velocity_threshold) | (torch.abs(F_f_data * max_F_f) > force_threshold)
+    combined_mask = (torch.abs(v_data) > velocity_threshold) | (torch.abs(F_f_data) > force_threshold)
 
     # The mask must contains poiints only on the first and third quadrant
     combined_mask = combined_mask & (v_data * F_f_data > 0) & (torch.abs(a_data) < acceleration_threshold)
@@ -157,16 +155,30 @@ def test_model(model, v_data, F_f_data, max_v, max_F_f, a_data):
     filtered_v_data = v_data[combined_mask]
     filtered_F_f_data = F_f_data[combined_mask]
 
+    no_color = "#1f77b4"
+    scv_color = "#2ca02c"
+
     # plot the results
     plt.figure()
-    plt.scatter(v_data.detach().numpy() * max_v.detach().numpy(), F_f_data.detach().numpy() * max_F_f.detach().numpy(), label='True', alpha=0.5, s=1)
-    plt.scatter(v_data.detach().numpy() * max_v.detach().numpy(), F_f_pred.detach().numpy() * max_F_f.detach().numpy(), label='Predicted', alpha=0.5, s=1)
+    # plt.scatter(v_data.detach().numpy() * max_v.detach().numpy(), F_f_data.detach().numpy() * max_F_f.detach().numpy(), label='True', alpha=0.5, s=1)
+    # plt.scatter(v_data.detach().numpy() * max_v.detach().numpy(), F_f_pred.detach().numpy() * max_F_f.detach().numpy(), label='Predicted', alpha=0.5, s=1)
+    plt.scatter(v_data.detach().numpy(), F_f_data.detach().numpy(), label='True', alpha=0.5, s=1, color=no_color)
+    plt.scatter(v_data.detach().numpy(), F_f_pred.detach().numpy(), label='SCV', alpha=0.5, s=1, color=scv_color)
+    # Add x axis lable and y axis label
+    plt.xlabel('Velocity (rad/s)')
+    plt.ylabel('Friction torque (Nm)')
+    # add the legend
+    plt.legend()
+    # Add title with joint name
+    plt.title('Friction torque of knee joint')
     plt.show()
 
-    plt.figure()
-    plt.scatter(v_data[combined_mask].detach().numpy() * max_v.detach().numpy(), F_f_data[combined_mask].detach().numpy() * max_F_f.detach().numpy(), label='True', alpha=0.5, s=1)
-    plt.scatter(v_data[combined_mask].detach().numpy() * max_v.detach().numpy(), F_f_pred[combined_mask].detach().numpy() * max_F_f.detach().numpy(), label='Predicted', alpha=0.5, s=1)
-    plt.show()
+    # plt.figure()
+    # plt.scatter(v_data[combined_mask].detach().numpy() * max_v.detach().numpy(), F_f_data[combined_mask].detach().numpy() * max_F_f.detach().numpy(), label='True', alpha=0.5, s=1)
+    # plt.scatter(v_data[combined_mask].detach().numpy() * max_v.detach().numpy(), F_f_pred[combined_mask].detach().numpy() * max_F_f.detach().numpy(), label='Predicted', alpha=0.5, s=1)
+    # plt.scatter(v_data[combined_mask].detach().numpy(), F_f_data[combined_mask].detach().numpy(), label='True', alpha=0.5, s=1)
+    # plt.scatter(v_data[combined_mask].detach().numpy(), F_f_pred[combined_mask].detach().numpy(), label='Predicted', alpha=0.5, s=1)
+    # plt.show()
 
 # Main function to train and save the model
 def main():
