@@ -17,7 +17,7 @@ Giuseppe L'Erario, Silvio Traversaro, Daniele Pucci <br> <br>
    <a href="https://ieeexplore.ieee.org/document/10769966/"><b>📜 Paper</b></a> &nbsp;&nbsp;&nbsp;
    <a href="https://arxiv.org/abs/2410.12685"><b>📚 arXiv</b></a> &nbsp;&nbsp;&nbsp;
    <a href="https://www.youtube.com/watch?v=aVTaQcAHQ5Y"><b>🎥 Video</b></a> &nbsp;&nbsp;&nbsp;
-   <a href=""><b>🖼️ Poster</b></a> &nbsp;&nbsp;&nbsp;
+   <a href="https://github.com/ami-iit/paper_sorrentino_2024_humanoids_friction_estimation/blob/main/poster/Humanoids24_poster.pdf"><b>🖼️ Poster</b></a> &nbsp;&nbsp;&nbsp;
    <a href="https://huggingface.co/datasets/ami-iit/paper_Sorrentino_Humanoids2024_Friction"><b>📂 Dataset</b></a>
 </div>
 
