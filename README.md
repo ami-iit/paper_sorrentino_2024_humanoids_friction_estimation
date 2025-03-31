@@ -10,7 +10,15 @@ Giuseppe L'Erario, Silvio Traversaro, Daniele Pucci <br> <br>
 </div>
 
 <div align="center">
-    📅 Submitted to the 2024 IEEE-RAS International Conference on Humanoid Robots (Humanoids) 🤖
+    📅 Accepted for publication at the 2024 IEEE-RAS International Conference on Humanoid Robots (Humanoids), Nancy, France 🤖
+</div>
+
+<div align="center">
+   <a href="https://ieeexplore.ieee.org/document/10769966/"><b>📜 Paper</b></a> &nbsp;&nbsp;&nbsp;
+   <a href="https://arxiv.org/abs/2410.12685"><b>📚 arXiv</b></a> &nbsp;&nbsp;&nbsp;
+   <a href="https://www.youtube.com/watch?v=aVTaQcAHQ5Y"><b>🎥 Video</b></a> &nbsp;&nbsp;&nbsp;
+   <a href=""><b>🖼️ Poster</b></a> &nbsp;&nbsp;&nbsp;
+   <a href="https://huggingface.co/datasets/ami-iit/paper_Sorrentino_Humanoids2024_Friction"><b>📂 Dataset</b></a>
 </div>
 
 ## Installation
